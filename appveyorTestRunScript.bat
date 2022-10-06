@@ -8,7 +8,9 @@ if "%CONFIGURATION%"=="Debug" (
     python ..\tools\misc\appveyorMergeCoverageScript.py || exit /b !ERRORLEVEL!
     codecov --root .. --no-color --disable gcov -f cobertura.xml -t %CODECOV_TOKEN% || exit /b !ERRORLEVEL!
   ) else (
-    .\x64\Debug\TESTS.exe -r Junit
+    .\x64\Debug\TESTS.exe -r Junit >> unit.xml
+	$wc = New-Object 'System.Net.WebClient'
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\unit.xml))
   )
 )
 if "%CONFIGURATION%"=="Release" (
