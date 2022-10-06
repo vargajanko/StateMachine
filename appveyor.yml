@@ -11,9 +11,10 @@ build:
   parallel: true                        # enable MSBuild parallel builds
   verbosity: normal                     # MSBuild verbosity level {quiet|minimal|normal|detailed}
 
-  - name: Run Unit Tests
-    working-directory: .\x64\Debug
-    run: ./TESTS.exe -s
+  steps:
+    -name: Run Unit Tests
+       working-directory: .\x64\Debug
+       run: ./TESTS.exe -s
 
 test_script:
   - set CTEST_OUTPUT_ON_FAILURE=1
