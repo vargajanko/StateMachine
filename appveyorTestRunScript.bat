@@ -9,8 +9,8 @@ if "%CONFIGURATION%"=="Debug" (
     codecov --root .. --no-color --disable gcov -f cobertura.xml -t %CODECOV_TOKEN% || exit /b !ERRORLEVEL!
   ) else (
     .\x64\Debug\TESTS.exe -r Junit >> unit.xml
-	$wc = New-Object 'System.Net.WebClient'
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\unit.xml))
+	powershell $wc = New-Object 'System.Net.WebClient'
+    powershell $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\unit.xml))
   )
 )
 if "%CONFIGURATION%"=="Release" (
