@@ -11,6 +11,9 @@ build:
   parallel: true                        # enable MSBuild parallel builds
   verbosity: normal                     # MSBuild verbosity level {quiet|minimal|normal|detailed}
 
+test_script:
+  - set CTEST_OUTPUT_ON_FAILURE=1
+  - cmd: .appveyorTestRunScript.bat
 
 # Sadly we cannot use the standard "dimensions" based approach towards
 # specifying the different builds, as there is no way to add one-offs
