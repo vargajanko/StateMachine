@@ -12,5 +12,5 @@ if "%CONFIGURATION%"=="Debug" (
   )
 )
 if "%CONFIGURATION%"=="Release" (
-  ctest -j 2 -C %CONFIGURATION% || exit /b !ERRORLEVEL!
+  .\x64\Release\TESTS.exe -r Junit >> test.xml
 )
