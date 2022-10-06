@@ -17,12 +17,7 @@ build:
 # builds afterwards. This means that we will painfully specify each
 # build explicitly.
 environment:
-  matrix:
-    - FLAVOR: VS 2022 x64 Release
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-      platform: x64
-      configuration: Release
-      
+  matrix:     
     - FLAVOR: VS 2022 x64 Debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       platform: x64
