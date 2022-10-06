@@ -9,11 +9,10 @@ build:
     environment:
         matrix:
             - FLAVOR: VS 2022 x64 Debug
-            APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-            platform: x64
-            configuration: Debug
-
-            steps:
+              APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+              platform: x64
+              configuration: Debug
+              steps:
                 - name: Run Unit Tests
-                    working-directory: ./${{env.BUILD_PLATFORM}}/${{env.BUILD_CONFIGURATION}}
-                    run: ./TESTS.exe -s
+                  working-directory: ./${{env.BUILD_PLATFORM}}/${{env.BUILD_CONFIGURATION}}
+                  run: ./TESTS.exe -s
