@@ -7,5 +7,6 @@ export module StateMachine;
 
 export {
 	void MyFunc() {
+		//
 	}
 }
