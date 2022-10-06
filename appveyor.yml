@@ -1,33 +1,30 @@
-version: "{build}-{branch}"
+# For documentation on the github environment, see
+# https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+#
+# For documentation on the syntax of this file, see
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+name: MSBuild
 
-# If we ever get a backlog larger than clone_depth, builds will fail
-# spuriously. I do not think we will ever get 20 deep commits deep though.
-clone_depth: 20
+on: pull_request
 
+jobs:
+  build:
+    strategy:
+      matrix:
+        configurations: [Debug]
+    runs-on: windows-latest
+    env:
+      # Path to the solution file relative to the root of the project.
+      SOLUTION_FILE_PATH: StateMachine.sln
 
-# build with MSBuild
-build:
-  project: .\StateMachine.sln          # path to Visual Studio solution or project
-  parallel: true                        # enable MSBuild parallel builds
-  verbosity: normal                     # MSBuild verbosity level {quiet|minimal|normal|detailed}
+      # Configuration type to build.
+      # You can convert this to a build matrix if you need coverage of multiple configuration types.
+      # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+      BUILD_CONFIGURATION: ${{matrix.configurations}}
 
-  steps:
-    -name: Run Unit Tests
-       working-directory: .\x64\Debug
-       run: ./TESTS.exe -s
+      BUILD_PLATFORM: x64
 
-test_script:
-  - set CTEST_OUTPUT_ON_FAILURE=1
-  - cmd: appveyorTestRunScript.bat
- 
-# Sadly we cannot use the standard "dimensions" based approach towards
-# specifying the different builds, as there is no way to add one-offs
-# builds afterwards. This means that we will painfully specify each
-# build explicitly.
-environment:
-  matrix:     
-    - FLAVOR: VS 2022 x64 Debug
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-      platform: x64
-      configuration: Debug
-      
+    steps:
+    - name: Run Unit Tests
+      working-directory: ./${{env.BUILD_PLATFORM}}/${{env.BUILD_CONFIGURATION}}
+      run: ./TESTS.exe -s
