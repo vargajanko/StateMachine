@@ -8,7 +8,7 @@ if "%CONFIGURATION%"=="Debug" (
     python ..\tools\misc\appveyorMergeCoverageScript.py || exit /b !ERRORLEVEL!
     codecov --root .. --no-color --disable gcov -f cobertura.xml -t %CODECOV_TOKEN% || exit /b !ERRORLEVEL!
   ) else (
-    .\x64\Debug\TESTS.exe
+    .\x64\Debug\TESTS.exe -r Junit
   )
 )
 if "%CONFIGURATION%"=="Release" (
